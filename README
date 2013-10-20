@@ -1,0 +1,34 @@
+TeXPrep: slightly automatic preparation of LaTeX for OO/InD/…
+
+
+
+# = WHY? ================================================================================
+
+
+If you like to write your papers in LaTeX but have to submit them as .doc’s, and find that something is always not quite right when you convert them automatically, you can just as well give TeXPrep a go.
+
+When you submit a paper to a scientific journal, chances are that the only time your .doc will be ever used, will be to import it into Adobe InDesign. Most of the formatting will be lost in the process, and it will be re-applied by the typesetter to adjust it to the layout of the journal. Bolds matter, footnotes matter, and a few other things do too, but most will be changed anyway. Which is why I don't care how well the converter mimics the look of the pdf created by LaTeX.
+
+
+
+# = WHAT FOR? ===========================================================================
+
+
+What I do care about, is mostly whether I have to manually fix the references and section numbering, and what happens to my custom LaTeX commands.
+
+I wrote TeXPrep primarily with these two things in mind: 1. to have all the references and section numbers resolved and inserted for me, and 2. to have all my custom commands preserved. If I do not want them, I can cut them out from the .doc file myself – especially if they are in a nice XML-like syntax so that I can use regular expressions to find both their beginning and their end.
+
+
+
+# = HOW? ================================================================================
+
+
+Before you use TeXPrep, make sure the .aux file is up to date, i.e. compile your document up to three times. You will also need to make sure that the .tex and the .aux file are in the same directory, or TeXPrep will complain about one of them missing. This done, invoke TeXPrep like so:
+
+% ./texprep /path/to/your/document.tex
+
+TexPrep will either output an XML file, or an error. In the happy case, you can save the output to a .fodt file, and then open it in LibreOffice, touch up manually, and save as a .doc:
+
+% ./texprep /path/to/your/document.tex > /your/desired/output/path/document.fodt
+
+In the case of an error, I would be happy if you let me know. Please remember to attach the original document so that I can locate the problem and fix TexPrep. My address is kamil.stachowski [the “at” symbol] gmail.com.
