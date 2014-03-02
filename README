@@ -1,34 +1,24 @@
 TeXPrep: slightly automatic preparation of LaTeX for OO/InD/…
 
 
+TeXPrep can be considered a last resort for those who like to write their papers in LaTeX but are forced to submit them as .docs, and just can’t find the right converter.
 
-# = WHY? ================================================================================
+The basic idea is that most of the original formatting will have to be adjusted to the layout of the journal, and hence lost anyway. TeXPrep will not attempt to mimic it. It will conserve some of the important bits (footnotes, bolds, &c.), and leave everything else as is, only in a more convenient XML-like syntax, for you to touch up manually inside LibreOffice.
 
+It will also resolve the references and insert section numbering, as these tend to be the most time-consuming operations during a fully manual conversion.
 
-If you like to write your papers in LaTeX but have to submit them as .doc’s, and find that something is always not quite right when you convert them automatically, you can just as well give TeXPrep a go.
-
-When you submit a paper to a scientific journal, chances are that the only time your .doc will be ever used, will be to import it into Adobe InDesign. Most of the formatting will be lost in the process, and it will be re-applied by the typesetter to adjust it to the layout of the journal. Bolds matter, footnotes matter, and a few other things do too, but most will be changed anyway. Which is why I don't care how well the converter mimics the look of the pdf created by LaTeX.
-
-
-
-# = WHAT FOR? ===========================================================================
+TeXPrep is very configurable. In fact, a considerable part of its functionality could have been just as well written inside a config file. See the sample configuration file, texprep.conf.hs, for the details.
 
 
-What I do care about, is mostly whether I have to manually fix the references and section numbering, and what happens to my custom LaTeX commands.
+# = USAGE =
 
-I wrote TeXPrep primarily with these two things in mind: 1. to have all the references and section numbers resolved and inserted for me, and 2. to have all my custom commands preserved. If I do not want them, I can cut them out from the .doc file myself – especially if they are in a nice XML-like syntax so that I can use regular expressions to find both their beginning and their end.
+texprep /path/to/the/document
+	to make sure that everything is fine, and
+
+texprep /path/to/the/document > /desired/output/path/to/the/document.fodt
+	to save as a .fodt file, which you can later open in LibreOffice, touch up, and save as a .doc to submit to a journal.
 
 
-
-# = HOW? ================================================================================
-
-
-Before you use TeXPrep, make sure the .aux file is up to date, i.e. compile your document up to three times. You will also need to make sure that the .tex and the .aux file are in the same directory, or TeXPrep will complain about one of them missing. This done, invoke TeXPrep like so:
-
-% ./texprep /path/to/your/document.tex
-
-TexPrep will either output an XML file, or an error. In the happy case, you can save the output to a .fodt file, and then open it in LibreOffice, touch up manually, and save as a .doc:
-
-% ./texprep /path/to/your/document.tex > /your/desired/output/path/document.fodt
-
-In the case of an error, I would be happy if you let me know. Please remember to attach the original document so that I can locate the problem and fix TexPrep. My address is kamil.stachowski [the “at” symbol] gmail.com.
+# = AUTHOR =
+kamil ⟨dot⟩ stachowski ⟨at⟩ gmail ⟨dot⟩ com
+GPL3+
