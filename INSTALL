@@ -1,0 +1,15 @@
+texprep 0.1 (2013.10.27)
+TeXPrep: slightly automatic preparation of LaTeX for OO/InD/…
+
+
+DEPENDENCIES:
+– The Glasgow Haskell Compiler (http://www.haskell.org/ghc/)
+– Dyre (http://hackage.haskell.org/package/dyre)
+
+
+INSTALL:
+runhaskell Setup.hs configure --prefix=/usr --docdir=/usr/share/doc/$pkgname -O
+runhaskell Setup.hs build
+runhasekll Setup.hs haddock
+runhaskell Setup.hs install
+

@@ -64,6 +64,11 @@ data TexElem =
 -- = reading ======================================================================={{{==
 
 
+-- | The main parser.
+readTex :: String -> Either ParseError [TexElem]
+readTex = parse (fmap concat $ many readElem) ""
+
+
 -- | Read TexElems inside {}.
 readArg :: Parser TexArgOpt
 readArg = do
@@ -167,11 +172,6 @@ readSwitch = do
 				else [TexCmd "{" [] cont []])
 
 
--- | The main parser.
-readTex :: String -> Either ParseError [TexElem]
-readTex = parse (fmap concat $ many readElem) ""
-
-
 -- | Read text outside of commands.
 readTxt :: Parser [TexElem]
 readTxt = do
@@ -181,6 +181,16 @@ readTxt = do
 
 --																					}}}
 -- = postprocessing ================================================================{{{==
+
+
+-- | Postprocess after imperfect parsing.
+-- Fix special characters, and whatever defined in the config.
+procTex ::	Config -> ([TexElem],[TexElem]) -> [TexElem]
+procTex cfg (aux,tex) = foldr1 (.) procsrs' tex
+	where
+	procsrs' = [procSpec . procRefs aux . procSecNrs aux]
+				++ procsrs cfg
+				++ [procAliases (aliases cfg)]
 
 
 -- | Replace user-specified aliases.
@@ -269,18 +279,18 @@ procSpec (t:ts)
 	| otherwise	= t {args = procSpec (args t)} : procSpec ts
 
 
--- | Postprocess after imperfect parsing.
--- Fix special characters, and whatever defined in the config.
-procTex ::	Config -> ([TexElem],[TexElem]) -> [TexElem]
-procTex cfg (aux,tex) = foldr1 (.) procsrs' tex
-	where
-	procsrs' = [procSpec . procRefs aux . procSecNrs aux]
-				++ procsrs cfg
-				++ [procAliases (aliases cfg)]
-
-
 --																					}}}
 -- = writing ======================================================================={{{==
+
+
+-- | The main writer.
+writeFodt :: Config -> [TexElem] -> String
+writeFodt cfg elems = writePream cfg
+					++ writeParBeg False
+					++ concatMap (writeElem cfg) elems
+					++ writeParEnd
+					++ writeColoph
+-- writeFodt _ t = show t
 
 
 -- | The ending of a fodt document.
@@ -359,16 +369,6 @@ writePream cfg = "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n\n<office:document
 			++ "\t<office:body>\n"
 			++ "\t\t<office:text>\n"
 			++ "\n"
-
-
--- | The main writer.
-writeFodt :: Config -> [TexElem] -> String
-writeFodt cfg elems = writePream cfg
-					++ writeParBeg False
-					++ concatMap (writeElem cfg) elems
-					++ writeParEnd
-					++ writeColoph
--- writeFodt _ t = show t
 
 
 --																					}}}

@@ -1,0 +1,44 @@
+.TH texprep 1 "October 27, 2013" "version 0.1" "LaTeX > FODT"
+
+.\" -------------------------------------------------------------------------------------
+
+.SH NAME
+texprep \- Slightly automatic preparation of LaTeX for OO/InD/…
+
+.\" -------------------------------------------------------------------------------------
+
+.SH SYNOPSIS
+.B texprep
+FILENAME
+
+.\" -------------------------------------------------------------------------------------
+
+.SH DESCRIPTION
+TeXPrep can be considered a last resort for those who like to write their papers in LaTeX but are forced to submit them as .docs, and just can’t find the right converter.
+.PP
+The basic idea is that most of the original formatting will have to be adjusted to the layout of the journal, and hence lost anyway. TeXPrep will not attempt to mimic it. It will conserve some of the important bits (footnotes, bolds, &c.), and leave everything else as is, only in a more convenient XML-like syntax, for you to touch up manually inside LibreOffice.
+.PP
+It will also resolve the references and insert section numbering, as these tend to be the most time-consuming operations during a fully manual conversion.
+.PP
+TeXPrep is very configurable. In fact, a considerable part of its functionality could have been just as well written inside a config file. See the sample configuration file, texprep.conf.hs, for the details.
+
+.\" -------------------------------------------------------------------------------------
+
+.SH EXAMPLES
+texprep /path/to/the/document
+.IP
+to make sure that everything is fine, and
+.PP
+texprep /path/to/the/document > /desired/output/path/to/the/document.fodt
+.IP
+to save as a .fodt file, which you can later open in LibreOffice, touch up, and save as a .doc to submit to a journal.
+
+.\" -------------------------------------------------------------------------------------
+
+.SH BUGS
+No known bugs at this time. It’s a very fresh piece of software, nonetheless, so expect your dog to turn into a cat or a sofa.
+
+.\" -------------------------------------------------------------------------------------
+
+.SH AUTHOR
+kamil ⟨dot⟩ stachowski ⟨at⟩ gmail ⟨dot⟩ com

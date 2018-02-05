@@ -14,6 +14,8 @@ module TeXPrep.Cmd
 import Data.Maybe (fromMaybe)
 import TeXPrep.Core
 import Text.ParserCombinators.Parsec
+import Control.Monad (unless)
+import System.Directory (doesFileExist, getHomeDirectory)
 --																					}}}
 
 
